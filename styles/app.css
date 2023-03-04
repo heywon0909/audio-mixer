@@ -1,0 +1,101 @@
+
+:root {
+  --color-bg-dark: #1e1e1e;
+  --color-head: #323233;
+  --color-grey: #d1d1d1;
+  --color-text: #8e8e8e;
+  --color-accent: #f16e03;
+  --color-setting:#252526;
+  --color-white: white;
+  --color-scrollbar: #aaa7a7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+    margin:0;
+    height: 100%;
+	font-size: 10px;
+	background-color: var(--color-bg-dark);
+	width: 100%;
+}
+
+header {
+    height: 29px;
+    background-color: var(--color-head);
+    width: 100%;
+}
+
+.head-title {
+    display: inline-block;
+    color: var(--color-text);
+    width: 100%;
+    height: 10px;
+    font-size:0.7rem;
+    text-align: center;
+    margin-top:-3px;
+}
+
+.settings{
+    display: flex;
+    height: 120px;
+    flex-direction: column;
+    width: 100%;
+    background: var(--color-setting);
+}
+
+.settings .get-file{
+    position: relative;
+    display: flex;
+    height: 30px;
+    width: 100%;
+    color:var(--color-white);
+    background: var(--color-grey);
+    text-align: left;
+    position: relative;
+    border-radius: 3px;
+}
+
+.get-file > [type='file'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.get-file > .button {
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  background: dodgerblue;
+  padding: 8px 16px;
+  border-radius: 2px;
+  margin-right: 8px;
+}
+
+.get-file:hover > .button {
+  background: #000;
+  color: white;
+}
+
+.get-file > .label {
+  color: #333;
+  white-space: nowrap;
+  opacity: .3;
+  margin-top: 7px;
+}
+
+.music-control{
+    display:flex;
+    width: 100%;
+    flex-grow: 1;
+    height: auto;
+    background: var(--color-setting);
+}
