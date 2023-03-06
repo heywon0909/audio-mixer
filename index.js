@@ -41,11 +41,32 @@ function setAudioFile(file) {
         panner.pan.value = this.value;
       });
     }
-
+      function controlOscillator(source, context) {
+        let oscillatorNode = null
+        
+        document.getElementById('oscillator_control').addEventListener('click', function () {
+            
+            if (this.dataset.osPlaying === 'true') {
+                oscillatorNode.stop();
+                this.dataset.osPlaying = 'false';
+            } else {
+                oscillatorNode = context.createOscillator();
+                oscillatorNode.connect(context.destination);
+                oscillatorNode.type = `${document.querySelector('[name=os_control]:checked')?.id}`;
+                oscillatorNode.start();
+                this.dataset.osPlaying = 'true';
+            }
+        })
+      
+          document.getElementById('control_frequency').addEventListener('input', function (event) {
+              oscillatorNode.frequency.value = event.target.value;
+          })
+      
+    }
     controlStereoPanning(source, context);
     controlAudioVolume(source, context);
-    source.connect(gainNode).connect(panner).connect(context.destination);
-    setAudioVisualization(source, context);
+    controlOscillator(source, context);
+   
     let playBut = document.getElementById("play");
     playBut.addEventListener("click", function () {
       if (this.dataset.playing == "true") {
@@ -55,11 +76,15 @@ function setAudioFile(file) {
         this.dataset.playing = true;
         context.resume();
       }
-    });
+    },false);
+    source.connect(gainNode).connect(panner).connect(context.destination);
+    setAudioVisualization(source, context);  
+      
   });
 }
 
 function setAudioVisualization(source, context) {
+  console.log('source',source)
   const analyser = context.createAnalyser();
   source.connect(analyser);
   const distortion = context.createWaveShaper();
