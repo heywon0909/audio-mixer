@@ -24,7 +24,29 @@ function setAudioFile(file) {
     source.loop = false;
     source.connect(context.destination);
     source.start(0);
+    // 사운드 수정하기
+    const gainNode = context.createGain();
+    function controlAudioVolume(source, context) {
+      const volumeControl = document.getElementById("volume");
+      volumeControl.addEventListener("input", function () {
+        gainNode.gain.value = this.value;
+      });
+    }
+    const pannerOptions = { pan: 0 };
+    const panner = new StereoPannerNode(context, pannerOptions);
+    // 스테레오 패닝
+    function controlStereoPanning(source, context) {
+      const pannerControl = document.getElementById("panner");
+      pannerControl.addEventListener("input", function () {
+        panner.pan.value = this.value;
+      });
+    }
+
     setAudioVisualization(source, context);
+    controlStereoPanning(source, context);
+    controlAudioVolume(source, context);
+    source.connect(gainNode).connect(panner).connect(context.destination);
+
     let playBut = document.getElementById("play");
     playBut.addEventListener("click", function () {
       if (this.dataset.playing == "true") {
