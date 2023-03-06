@@ -42,11 +42,10 @@ function setAudioFile(file) {
       });
     }
 
-    setAudioVisualization(source, context);
     controlStereoPanning(source, context);
     controlAudioVolume(source, context);
     source.connect(gainNode).connect(panner).connect(context.destination);
-
+    setAudioVisualization(source, context);
     let playBut = document.getElementById("play");
     playBut.addEventListener("click", function () {
       if (this.dataset.playing == "true") {
