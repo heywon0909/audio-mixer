@@ -47,13 +47,13 @@
       </div>
       <div class="control-pannel">
         <!-- 소리 볼륨 -->
-        <div>
-        <label for="volume">소리</label>
-        <input type="range" id="volume" min="0" max="3" value="1" step="0.01" orient="vertical">
+        <div class="control">
+        <h1>소리</h1>
+        <input type="range" id="volume" min="0" max="3" value="1" step="0.01">
         </div>
         <!-- 스테레오 패닝 -->
-        <div>
-         <label for="panner">패닝</label>
+        <div class="control">
+         <h1>패닝</h1>
         <input type="range" id="panner" min="-1" max="1" value="0" step="0.01">
         </div>
         <!-- 파형 설정 -->
@@ -67,9 +67,11 @@
           <input type="radio" id="triangle" name="os_control"/>
           <label for="sawtooth">Sawtooth파</label>
            <input type="radio" id="sawtooth" name="os_control"/>
-          <label for="control_frequency">주파수 조정</label>
-          <input type="range" name="control_frequency" id="control_frequency" min="1" max="2000" value="440">
         </div>
+         <div class="control">
+          <h1>주파수 조정</h1>
+          <input type="range" name="control_frequency" id="control_frequency" min="1" max="2000" value="440">
+          </div>
       </div>
     </div>
 
