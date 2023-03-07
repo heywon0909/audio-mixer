@@ -76,6 +76,17 @@ function setAudioFile(file) {
       distortion.connect(context.destination)
     })
 
+    const biquadFilter = context.createBiquadFilter();
+    document.getElementById('filter').addEventListener('input', function () {
+      biquadFilter.type = "lowshelf";
+      biquadFilter.frequency.value = this.value;
+      biquadFilter.gain.setValueAtTime(25, context.currentTime);
+      source.connect(biquadFilter);
+      biquadFilter.connect(context.destination);
+    })
+
+    const convolver = context.createConvolver();
+    
   
 
     let playBut = document.getElementById("play");

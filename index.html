@@ -61,10 +61,10 @@
           <h1>distortion</h1>
          <input type="range" id="distortion" min="0" max="1" value="0" step="0.01">
         </div>
-        <!--필터-->
+         <!--리버브-->
         <div class="control">
-          <h1>filter</h1>
-         <input type="range" id="filter" min="-1" max="1" value="0" step="0.01">
+          <h1>reverb</h1>
+         <input type="range" id="reverb" min="0" max="1" value="0" step="0.01">
         </div>
         <!-- 파형 설정 -->
         <div id="oscillator">
@@ -82,7 +82,13 @@
           <h1>frequency</h1>
           <input type="range" name="control_frequency" id="control_frequency" min="1" max="2000" value="440">
           </div>
+         <!--필터-->
+        <div class="control">
+          <h1>filter</h1>
+         <input type="range" id="filter" min="0" max="22050" step="1000" value="350">
+        </div>  
       </div>
+
     </div>
 
     <script src="index.js"></script>
