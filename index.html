@@ -48,38 +48,38 @@
       <div class="control-pannel">
         <!-- 소리 볼륨 -->
         <div class="control">
-        <h1>소리</h1>
+        <h1>Volume</h1>
         <input type="range" id="volume" min="0" max="3" value="1" step="0.01">
         </div>
         <!-- 스테레오 패닝 -->
         <div class="control">
-         <h1>패닝</h1>
+         <h1>panning</h1>
         <input type="range" id="panner" min="-1" max="1" value="0" step="0.01">
         </div>
         <!--왜곡-->
         <div class="control">
-          <h1>왜곡</h1>
-         <input type="range" id="distortion" min="-1" max="1" value="0" step="0.01">
+          <h1>distortion</h1>
+         <input type="range" id="distortion" min="0" max="1" value="0" step="0.01">
         </div>
         <!--필터-->
         <div class="control">
-          <h1>패닝</h1>
+          <h1>filter</h1>
          <input type="range" id="filter" min="-1" max="1" value="0" step="0.01">
         </div>
         <!-- 파형 설정 -->
         <div id="oscillator">
           <button id="oscillator_control" data-os-playing="false">play/pause</button>
-          <label for="sine">Sine파</label>
+          <label for="sine">Sine</label>
           <input type="radio" id="sine" name="os_control" checked />
-          <label for="square">Square파</label>
+          <label for="square">Square</label>
           <input type="radio" id="square" name="os_control"/>
-          <label for="triangle">Triangle파</label>
+          <label for="triangle">Triangle</label>
           <input type="radio" id="triangle" name="os_control"/>
-          <label for="sawtooth">Sawtooth파</label>
+          <label for="sawtooth">Sawtooth</label>
            <input type="radio" id="sawtooth" name="os_control"/>
         </div>
          <div class="control">
-          <h1>주파수 조정</h1>
+          <h1>frequency</h1>
           <input type="range" name="control_frequency" id="control_frequency" min="1" max="2000" value="440">
           </div>
       </div>

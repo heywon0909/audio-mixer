@@ -26,22 +26,22 @@ function setAudioFile(file) {
     source.start(0);
     // 사운드 수정하기
     const gainNode = context.createGain();
-    function controlAudioVolume(source, context) {
+   
       const volumeControl = document.getElementById("volume");
       volumeControl.addEventListener("input", function () {
         gainNode.gain.value = this.value;
       });
-    }
+    
     const pannerOptions = { pan: 0 };
     const panner = new StereoPannerNode(context, pannerOptions);
     // 스테레오 패닝
-    function controlStereoPanning(source, context) {
+    
       const pannerControl = document.getElementById("panner");
       pannerControl.addEventListener("input", function () {
         panner.pan.value = this.value;
       });
-    }
-    function controlOscillator(source, context) {
+    
+    
       let oscillatorNode = null;
 
       document
@@ -66,10 +66,17 @@ function setAudioFile(file) {
         .addEventListener("input", function (event) {
           oscillatorNode.frequency.value = event.target.value;
         });
-    }
-    controlStereoPanning(source, context);
-    controlAudioVolume(source, context);
-    controlOscillator(source, context);
+    
+    const distortion = context.createWaveShaper();
+    document.getElementById('distortion').addEventListener('input', function () {
+      let val = parseInt(this.value* 500);
+      distortion.curve = makeDistortionCurve(val);
+      distortion.oversample = '4x';
+      source.connect(distortion);
+      distortion.connect(context.destination)
+    })
+
+  
 
     let playBut = document.getElementById("play");
     playBut.addEventListener(
@@ -141,3 +148,17 @@ function setAudioVisualization(source, context) {
   }
   draw();
 }
+
+ function makeDistortionCurve(amount) {
+    let k = typeof amount === "number" ? amount : 50,
+      n_samples = 44100,
+      curve = new Float32Array(n_samples),
+      deg = Math.PI / 180,
+      i = 0,
+      x;
+    for (; i < n_samples; ++i) {
+      x = (i * 2) / n_samples - 1;
+      curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+    }
+    return curve;
+  }
