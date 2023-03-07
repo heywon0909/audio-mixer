@@ -64,7 +64,9 @@ function setAudioFile(file) {
       document
         .getElementById("control_frequency")
         .addEventListener("input", function (event) {
-          oscillatorNode.frequency.value = event.target.value;
+          if (oscillatorNode) {
+           oscillatorNode.frequency.value = event.target.value;
+          }
         });
     
     const distortion = context.createWaveShaper();
@@ -85,7 +87,22 @@ function setAudioFile(file) {
       biquadFilter.connect(context.destination);
     })
 
-    const convolver = context.createConvolver();
+    
+    let musicDelay = context.createDelay(1);    
+    document.getElementById('delay').addEventListener('input', function () {
+
+      musicDelay.delayTime.value = this.value;
+      if (this.value > 0) {
+        source.stop();
+   
+
+        source = context.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        source.start(0);
+        setAudioVisualization(source, context);
+      }
+    })
     
   
 
@@ -103,7 +120,7 @@ function setAudioFile(file) {
       },
       false
     );
-    source.connect(gainNode).connect(panner).connect(context.destination);
+    source.connect(gainNode).connect(panner).connect(musicDelay).connect(context.destination);
     setAudioVisualization(source, context);
   });
 }
