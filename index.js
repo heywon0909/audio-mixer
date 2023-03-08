@@ -18,22 +18,46 @@ function readFile(files, target) {
 
 function setAudioFile(file) {
   let context = new window.AudioContext();
+  let source;
   context.decodeAudioData(file, function (buffer) {
-    let source = context.createBufferSource();
+    source = context.createBufferSource();
     source.buffer = buffer;
     source.loop = false;
-    source.connect(context.destination);
-    source.start(0);
-    // 사운드 수정하기
-    const gainNode = context.createGain();
-   
-      const volumeControl = document.getElementById("volume");
-      volumeControl.addEventListener("input", function () {
-        gainNode.gain.value = this.value;
-      });
     
+   
+    const gainNode = context.createGain();
     const pannerOptions = { pan: 0 };
     const panner = new StereoPannerNode(context, pannerOptions);
+    const distortion = context.createWaveShaper();
+    const biquadFilter = context.createBiquadFilter();
+    let musicDelay = context.createDelay(5.0);
+    
+    // 사운드 수정하기
+    let fast_rate = 1;
+    const soundForward = document.getElementById("forward");
+    soundForward.addEventListener('click', function () {
+      fast_rate+=0.5;
+      source.playbackRate.value = fast_rate;
+    });
+
+    
+    const soundBackword = document.getElementById("backward");
+    soundBackword.addEventListener('click', function () {
+      fast_rate -= 0.05;
+     source.playbackRate.value = fast_rate;
+    })
+    
+   
+    const volumeControl = document.getElementById("volume");
+    volumeControl.addEventListener("input", function (event) {
+      console.log('e', event.target.value);
+      gainNode.gain.value = event.target.value;
+      source.connect(gainNode);
+      gainNode.connect(context.destination);
+      console.log('gainNode',gainNode)
+      },false);
+    
+   
     // 스테레오 패닝
     
       const pannerControl = document.getElementById("panner");
@@ -69,7 +93,7 @@ function setAudioFile(file) {
           }
         });
     
-    const distortion = context.createWaveShaper();
+    
     document.getElementById('distortion').addEventListener('input', function () {
       let val = parseInt(this.value* 500);
       distortion.curve = makeDistortionCurve(val);
@@ -78,27 +102,29 @@ function setAudioFile(file) {
       distortion.connect(context.destination)
     })
 
-    const biquadFilter = context.createBiquadFilter();
+    
     document.getElementById('filter').addEventListener('input', function () {
       biquadFilter.type = "lowshelf";
       biquadFilter.frequency.value = this.value;
       biquadFilter.gain.setValueAtTime(25, context.currentTime);
-      source.connect(biquadFilter);
-      biquadFilter.connect(context.destination);
     })
 
     
-    let musicDelay = context.createDelay(1);    
+        
     document.getElementById('delay').addEventListener('input', function () {
-
-      musicDelay.delayTime.value = this.value;
+      source.stop();
+      musicDelay.delayTime.setValueAtTime(this.value, context.currentTime);
+     
       if (this.value > 0) {
-        source.stop();
-   
 
         source = context.createBufferSource();
         source.buffer = buffer;
-        source.loop = true;
+        source.loop = false;
+        if (fast_rate > 1 && fast_rate < 1) {
+         source.playbackRate.value = fast_rate;
+        }
+       
+        source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
         source.start(0);
         setAudioVisualization(source, context);
       }
@@ -110,20 +136,29 @@ function setAudioFile(file) {
     playBut.addEventListener(
       "click",
       function () {
+        console.log('this', this.dataset.playing)
+       
         if (this.dataset.playing == "true") {
           this.dataset.playing = false;
           context.suspend();
         } else {
           this.dataset.playing = true;
+           if (context.state === 'suspended') {
           context.resume();
+           } else {
+           source.start();
+           } 
+          
+          
+         
         }
       },
       false
     );
 
-    source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
+     source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
     setAudioVisualization(source, context);
-  });
+   });
 }
 
 function setAudioVisualization(source, context) {

@@ -24,13 +24,13 @@
         </div>
         <div class="music-control">
           <div class="player-container">
-           <button class="but" id="play" data-playing="true">
+           <button class="but" id="play" data-playing="false">
             <i class="fas fa-play"></i>
           </button>
-          <button class="but">
+          <button class="but" id="backward">
             <i class="fas fa-backward"></i>
           </button>
-          <button class="but">
+          <button class="but" id="forward">
             <i class="fas fa-forward"></i>
           </button>
           <button class="but">
@@ -49,7 +49,7 @@
         <!-- 소리 볼륨 -->
         <div class="control">
         <h1>Volume</h1>
-        <input type="range" id="volume" min="0" max="3" value="1" step="0.01">
+        <input type="range" id="volume" min="0" max="1" value="0.5" step="0.1">
         </div>
         <!-- 스테레오 패닝 -->
         <div class="control">
