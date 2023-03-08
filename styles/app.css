@@ -135,10 +135,14 @@ header {
 .audio-visual{
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.visualizer{
-  width: 100%;
+.visualizer {
+  max-width: 1200px;
+  width: auto;
   background: white;
   height: 500px;
 }

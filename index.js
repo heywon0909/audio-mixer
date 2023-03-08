@@ -120,7 +120,8 @@ function setAudioFile(file) {
       },
       false
     );
-    source.connect(gainNode).connect(panner).connect(musicDelay).connect(context.destination);
+
+    source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
     setAudioVisualization(source, context);
   });
 }
@@ -136,43 +137,34 @@ function setAudioVisualization(source, context) {
   const dataArray = new Uint8Array(bufferLength);
   analyser.getByteTimeDomainData(dataArray);
 
-  var canvas = document.querySelector(".visualizer");
-  var canvasCtx = canvas.getContext("2d");
+  let canvas = document.querySelector(".visualizer");
+  let canvasCtx = canvas.getContext("2d");
 
   const WIDTH = canvas.width;
   const HEIGHT = canvas.height;
-
   canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+
+  var barWidth = (WIDTH / bufferLength) * 1.5;
+  var barHeight;
+  var x = 0;
 
   function draw() {
     let drawVisual = requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
 
-    canvasCtx.fillStyle = "white";
+    canvasCtx.fillStyle = "rgb(245,245,245)";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = "red";
-    canvasCtx.beginPath();
-
-    var sliceWidth = (WIDTH * 1.0) / bufferLength;
-    var x = 0;
+    
+    x = 0;
 
     for (var i = 0; i < bufferLength; i++) {
-      var v = dataArray[i] / 128.0;
-      var y = (v * HEIGHT) / 2;
-
-      if (i === 0) {
-        canvasCtx.moveTo(x, y);
-      } else {
-        canvasCtx.lineTo(x, y);
+          barHeight = dataArray[i];
+          
+          canvasCtx.fillStyle = 'rgb(4,81,' + (barHeight + 100) + ')';
+          canvasCtx.fillRect(x, HEIGHT - barHeight/2, barWidth, barHeight/2);
+  
+          x += barWidth + 1;
       }
-
-      x += sliceWidth;
-    }
-
-    canvasCtx.lineTo(canvas.width, canvas.height / 2);
-    canvasCtx.stroke();
   }
   draw();
 }
