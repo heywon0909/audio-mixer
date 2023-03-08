@@ -31,6 +31,8 @@ function setAudioFile(file) {
     const distortion = context.createWaveShaper();
     const biquadFilter = context.createBiquadFilter();
     let musicDelay = context.createDelay(5.0);
+    const convolverNode = context.createConvolver();
+    convolverNode.buffer = buffer;
     
     // 사운드 수정하기
     let fast_rate = 1;
@@ -57,6 +59,10 @@ function setAudioFile(file) {
     //   console.log('gainNode',gainNode)
     //   },false);
     
+    const reverbControl = document.getElementById('reverb');
+    reverbControl.addEventListener('input', function () {
+      convolverNode.gain.value = this.value;
+    })
    
     // 스테레오 패닝
     
@@ -124,7 +130,7 @@ function setAudioFile(file) {
          source.playbackRate.value = fast_rate;
         }
        
-        source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
+        source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(convolverNode).connect(context.destination);
         source.start(0);
         setAudioVisualization(source, context);
       }
@@ -156,7 +162,7 @@ function setAudioFile(file) {
       false
     );
 
-     source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(context.destination);
+     source.connect(gainNode).connect(panner).connect(musicDelay).connect(biquadFilter).connect(convolverNode).connect(context.destination);
     setAudioVisualization(source, context);
    });
 }
