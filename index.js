@@ -106,14 +106,14 @@ function setAudioFile(file) {
     document.getElementById('filter').addEventListener('input', function () {
       biquadFilter.type = "lowshelf";
       biquadFilter.frequency.value = this.value;
-      biquadFilter.gain.setValueAtTime(25, context.currentTime);
+      biquadFilter.gain.setValueAtTime(10, context.currentTime);
     })
 
     
         
     document.getElementById('delay').addEventListener('input', function () {
       source.stop();
-      musicDelay.delayTime.setValueAtTime(this.value, context.currentTime);
+      musicDelay.delayTime.setValueAtTime(this.value, context.currentTime+2);
      
       if (this.value > 0) {
 
