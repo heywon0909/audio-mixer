@@ -146,10 +146,18 @@ header {
   background: white;
   height: 500px;
 }
-.control-pannel{
+.control-container {
   display: flex;
   width: 100%;
   height: 228px;
+  justify-content: center;
+  align-items: center;
+}
+.control-pannel {
+  display: flex;
+  max-width: 1600px;
+  height: 228px;
+  width: auto;
 }
 .control-pannel div.control{
  color: #404040;

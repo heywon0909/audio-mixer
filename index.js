@@ -48,14 +48,14 @@ function setAudioFile(file) {
     })
     
    
-    const volumeControl = document.getElementById("volume");
-    volumeControl.addEventListener("input", function (event) {
-      console.log('e', event.target.value);
-      gainNode.gain.value = event.target.value;
-      source.connect(gainNode);
-      gainNode.connect(context.destination);
-      console.log('gainNode',gainNode)
-      },false);
+    // const volumeControl = document.getElementById("volume");
+    // volumeControl.addEventListener("input", function (event) {
+    //   console.log('e', event.target.value);
+    //   gainNode.gain.value = event.target.value;
+    //   source.connect(gainNode);
+    //   gainNode.connect(context.destination);
+    //   console.log('gainNode',gainNode)
+    //   },false);
     
    
     // 스테레오 패닝
