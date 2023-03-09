@@ -1,11 +1,10 @@
-
 :root {
   --color-bg-dark: #1e1e1e;
   --color-head: #323233;
   --color-grey: #d1d1d1;
   --color-text: #8e8e8e;
   --color-accent: #f16e03;
-  --color-setting:#252526;
+  --color-setting: #252526;
   --color-white: white;
   --color-scrollbar: #aaa7a7;
 }
@@ -14,15 +13,13 @@
   box-sizing: border-box;
 }
 
-
 body {
-  margin:0;
+  margin: 0;
   height: 100%;
-	font-size: 10px;
-	background-color: var(--color-bg-dark);
-	width: 100%;
+  font-size: 10px;
+  background-color: var(--color-bg-dark);
+  width: 100%;
 }
-
 
 h1 {
   font-size: 1.6em;
@@ -31,10 +28,9 @@ h1 {
   margin-top: -11px;
 }
 
-
 #root {
-    height: 100%;
-    min-width: fit-content;
+  height: 100%;
+  min-width: fit-content;
 }
 
 button {
@@ -42,44 +38,43 @@ button {
   border: none;
 }
 
-
 header {
-    height: 29px;
-    background-color: var(--color-head);
-    width: 100%;
+  height: 29px;
+  background-color: var(--color-head);
+  width: 100%;
 }
 
 .head-title {
-    display: inline-block;
-    color: var(--color-text);
-    width: 100%;
-    height: 10px;
-    font-size:0.7rem;
-    text-align: center;
-    margin-top:-3px;
+  display: inline-block;
+  color: var(--color-text);
+  width: 100%;
+  height: 10px;
+  font-size: 0.7rem;
+  text-align: center;
+  margin-top: -3px;
 }
 
-.settings{
-    display: flex;
-    height: 120px;
-    flex-direction: column;
-    width: 100%;
-    background: var(--color-setting);
+.settings {
+  display: flex;
+  height: 120px;
+  flex-direction: column;
+  width: 100%;
+  background: var(--color-setting);
 }
 
-.settings .get-file{
-    position: relative;
-    display: flex;
-    height: 30px;
-    width: 100%;
-    color:var(--color-white);
-    background: var(--color-grey);
-    text-align: left;
-    position: relative;
-    border-radius: 3px;
+.settings .get-file {
+  position: relative;
+  display: flex;
+  height: 30px;
+  width: 100%;
+  color: var(--color-white);
+  background: var(--color-grey);
+  text-align: left;
+  position: relative;
+  border-radius: 3px;
 }
 
-.get-file > [type='file'] {
+.get-file > [type="file"] {
   position: absolute;
   top: 0;
   left: 0;
@@ -108,31 +103,38 @@ header {
 .get-file > .label {
   color: #333;
   white-space: nowrap;
-  opacity: .3;
+  opacity: 0.3;
   margin-top: 7px;
 }
 
-.music-control{
-    display:flex;
-    width: 100%;
-    flex-grow: 1;
-    height: auto;
-    background: var(--color-setting);
+.music-control {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  height: auto;
+  background: var(--color-setting);
 }
 
-.player-container{
-  display:flex;
+.player-container {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-
-.but{
-  width: 50px;
-  height: 50px;
-  margin:0px 4px;
+.setting-container {
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #458efc;
 }
 
-.audio-visual{
+.but {
+  width: 50px;
+  height: 50px;
+  margin: 0px 4px;
+}
+
+.audio-visual {
   width: 100%;
   height: 100%;
   display: flex;
@@ -159,15 +161,15 @@ header {
   height: 228px;
   width: auto;
 }
-.control-pannel div.control{
- color: #404040;
+.control-pannel div.control {
+  color: #404040;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding: 0px;
 }
-.control{
+.control {
   color: #404040;
   display: flex;
   flex-direction: column;
@@ -176,12 +178,12 @@ header {
   padding: 50px;
 }
 
-#oscillator{
+#oscillator {
   display: flex;
   align-items: center;
   height: 300px;
 }
-#oscillator_control{
+#oscillator_control {
   width: 80px;
   height: 20px;
 }
@@ -192,8 +194,8 @@ input[type="range"] {
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
   transform: rotate(90deg);
 }
 
@@ -206,13 +208,13 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 25px;
   height: 25px;
-  background: #04AA6D;
+  background: #04aa6d;
   cursor: pointer;
 }
 
 input[type="range"]::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: #04AA6D;
+  background: #04aa6d;
   cursor: pointer;
 }
