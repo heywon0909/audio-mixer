@@ -25,13 +25,15 @@ function setAudioFile(file) {
     source.loop = false;
 
     const gainNode = context.createGain();
+    gainNode.gain.value = 0.5;
     const pannerOptions = { pan: 0 };
     const panner = new StereoPannerNode(context, pannerOptions);
     const distortion = context.createWaveShaper();
     const biquadFilter = context.createBiquadFilter();
     let musicDelay = context.createDelay(5.0);
-    const convolverNode = context.createConvolver();
-    convolverNode.buffer = buffer;
+   
+    
+    setMusicTimeInfo(0.0, buffer.duration.toFixed(2));
 
     // 사운드 수정하기
     let fast_rate = 1;
@@ -50,24 +52,24 @@ function setAudioFile(file) {
     const volumeControl = document.getElementById("volume");
     volumeControl.addEventListener(
       "input",
-      function (event) {
-        gainNode.gain.value = event.target.value;
-        source.connect(gainNode);
+      function () {
+        gainNode.gain.setValueAtTime(this.value, context.currentTime);
+        this.nextElementSibling.querySelector('span').textContent = this.value;
         gainNode.connect(context.destination);
-      },
-      false
-    );
+        source.connect(gainNode);
+      });
 
-    const reverbControl = document.getElementById("reverb");
-    reverbControl.addEventListener("input", function () {
-      convolverNode.gain.value = this.value;
-    });
+    // const reverbControl = document.getElementById("reverb");
+    // reverbControl.addEventListener("input", function () {
+    //   convolverNode.gain.value = this.value;
+    // });
 
     // 스테레오 패닝
 
     const pannerControl = document.getElementById("panner");
     pannerControl.addEventListener("input", function () {
       panner.pan.value = this.value;
+      this.nextElementSibling.querySelector('span').textContent = this.value;
     });
 
     let oscillatorNode = null;
@@ -101,20 +103,24 @@ function setAudioFile(file) {
       .getElementById("distortion")
       .addEventListener("input", function () {
         let val = parseInt(this.value * 500);
+        this.nextElementSibling.querySelector('span').textContent =val;
         distortion.curve = makeDistortionCurve(val);
         distortion.oversample = "4x";
+    
       });
 
     document.getElementById("filter").addEventListener("input", function () {
       biquadFilter.type = "lowshelf";
       biquadFilter.frequency.value = this.value;
       biquadFilter.gain.setValueAtTime(10, context.currentTime);
+      this.nextElementSibling.querySelector('span').textContent = this.value;
+     
     });
 
     document.getElementById("delay").addEventListener("input", function () {
       source.stop();
       musicDelay.delayTime.setValueAtTime(this.value, context.currentTime + 2);
-
+       this.nextElementSibling.querySelector('span').textContent = this.value;
       if (this.value > 0) {
         source = context.createBufferSource();
         source.buffer = buffer;
@@ -122,13 +128,14 @@ function setAudioFile(file) {
         if (fast_rate > 1 && fast_rate < 1) {
           source.playbackRate.value = fast_rate;
         }
+        
 
         source
           .connect(gainNode)
           .connect(panner)
+          .connect(distortion)
           .connect(musicDelay)
           .connect(biquadFilter)
-          .connect(convolverNode)
           .connect(context.destination);
         source.start(0);
         setAudioVisualization(source, context);
@@ -154,15 +161,18 @@ function setAudioFile(file) {
           }
 
           timerSetting = setTimeout(function run() {
-            let currentTime =
-              fast_rate > 1 && fast_rate < 1
-                ? context.currentTime.toFixed(2) * fast_rate
-                : context.currentTime.toFixed(2);
+            let rate = Math.ceil(source.playbackRate.value)
+            let currentTime = context.currentTime.toFixed(2);
             let stopTime = buffer.duration.toFixed(2);
-            if (currentTime >= 0 && currentTime <= stopTime) {
+            if (rate > 1 || rate < 1) {
+              clearTimeout(timerSetting);
+              document.querySelector('.setting-container').style = 'display:none';
+            }
+            if (Number(currentTime) <= Number(stopTime)) {
               setMusicTimeInfo(currentTime, stopTime);
               setTimeout(run, 100);
             } else {
+              setMusicTimeInfo(currentTime, stopTime);
               clearTimeout(timerSetting);
             }
           }, 100);
@@ -171,14 +181,16 @@ function setAudioFile(file) {
       false
     );
 
-    source
-      .connect(gainNode)
-      .connect(panner)
-      .connect(musicDelay)
-      .connect(biquadFilter)
-      .connect(convolverNode)
-      .connect(context.destination);
-    setAudioVisualization(source, context);
+  
+     source
+    .connect(gainNode)
+    .connect(panner)
+    .connect(distortion)
+    .connect(musicDelay)
+    .connect(biquadFilter)
+    .connect(context.destination);
+     setAudioVisualization(source, context);
+
   });
 }
 function printTime(from, to) {
@@ -251,5 +263,5 @@ function getTimeStamp(time) {
   let min = parseInt((time % 3600) / 60);
   let sec = parseInt((time % 3600) % 60);
 
-  return `${hour}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec-}`;
+  return `${hour}:${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`;
 }

@@ -33,9 +33,6 @@
           <button class="but" id="forward">
             <i class="fas fa-forward"></i>
           </button>
-          <button class="but">
-            <i class="fas fa-microphone"></i>
-          </button>
           </div>
           <div class="setting-container">
            PLAY:<span style="color:white" id="currentTime">00:00:00</span>/
@@ -50,33 +47,53 @@
         <div class="control-pannel">
         <!-- 소리 볼륨 -->
         <div class="control">
+        <div class="control-title">
         <h1>Volume</h1>
+        </div>
         <input type="range" id="volume" min="-1" max="1" value="0.5" step="0.1">
+        <div class="sliderValue">
+          <span class="show">0.5</span>
+        </div>
         </div>
         <!-- 스테레오 패닝 -->
         <div class="control">
-         <h1>panning</h1>
+        <div class="control-title">
+        <h1>panning</h1>
+        </div>
         <input type="range" id="panner" min="-1" max="1" value="0" step="0.01">
+        <div class="sliderValue">
+          <span class="show">0</span>
+        </div>
         </div>
         <!--왜곡-->
         <div class="control">
+         <div class="control-title">
           <h1>distortion</h1>
+        </div>
          <input type="range" id="distortion" min="0" max="1" value="0" step="0.01">
+         <div class="sliderValue">
+          <span class="show">0</span>
         </div>
-         <!--리버브-->
+        </div>
+        <!-- 딜레이 -->
         <div class="control">
-          <h1>reverb</h1>
-         <input type="range" id="reverb" min="0" max="1" value="0" step="0.01">
-        </div>
-            <!-- 딜레이 -->
-          <div class="control">
+          <div class="control-title">
           <h1>delay</h1>
+        </div>
          <input type="range" id="delay" min="0" max="1" step="0.01" value="0">
+          <div class="sliderValue">
+          <span class="show">0</span>
+        </div>
         </div> 
          <!--필터-->
         <div class="control">
+        <div class="control-title">
           <h1>filter</h1>
+        </div>
          <input type="range" id="filter" min="0" max="22050" step="1000" value="350">
+         <div class="sliderValue">
+          <span class="show">1000</span>
+        </div>
         </div>  
         <!-- 파형 설정 -->
         <div id="oscillator">
