@@ -32,7 +32,7 @@ function setAudioFile(file) {
     const biquadFilter = context.createBiquadFilter();
     let musicDelay = context.createDelay(5.0);
    
-    
+    let timerSetting = null;
     setMusicTimeInfo(0.0, buffer.duration.toFixed(2));
 
     // 사운드 수정하기
@@ -59,10 +59,6 @@ function setAudioFile(file) {
         source.connect(gainNode);
       });
 
-    // const reverbControl = document.getElementById("reverb");
-    // reverbControl.addEventListener("input", function () {
-    //   convolverNode.gain.value = this.value;
-    // });
 
     // 스테레오 패닝
 
@@ -120,7 +116,8 @@ function setAudioFile(file) {
     document.getElementById("delay").addEventListener("input", function () {
       source.stop();
       musicDelay.delayTime.setValueAtTime(this.value, context.currentTime + 2);
-       this.nextElementSibling.querySelector('span').textContent = this.value;
+      this.nextElementSibling.querySelector('span').textContent = this.value;
+       document.querySelector('.setting-container').style = 'display:none';
       if (this.value > 0) {
         source = context.createBufferSource();
         source.buffer = buffer;
@@ -147,7 +144,7 @@ function setAudioFile(file) {
       "click",
       function () {
         console.log("this", this.dataset.playing);
-        let timerSetting = null;
+        
         if (this.dataset.playing == "true") {
           this.dataset.playing = false;
           context.suspend();
