@@ -11,6 +11,16 @@
   "devDependencies": {
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.0",
-    "@babel/preset-env": "^7.20.2"
-  }
+    "@babel/preset-env": "^7.20.2",
+    "typescript": "^5.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heywon0909/audio-mixer.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/heywon0909/audio-mixer/issues"
+  },
+  "homepage": "https://github.com/heywon0909/audio-mixer#readme"
 }
